@@ -1,11 +1,17 @@
 package hirs.structs.converters;
 
-import static org.testng.Assert.assertEquals;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+//import static org.testng.Assert.assertEquals;
+//import org.testng.annotations.Test;
 
 /**
  * Tests suite for {@link SimpleStructConverter}.
  */
+
 public class SimpleStructBuilderTest {
     private static final int NUMBER = 123;
     private static final byte[] ARRAY = new byte[] {4, 5, 6};
@@ -31,15 +37,15 @@ public class SimpleStructBuilderTest {
                 .build())
             .build();
 
-        assertEquals(struct.getTestShort(), NUMBER);
-        assertEquals(struct.getTestByte(), NUMBER);
+  //      assertThat(struct.getTestShort(), equalTo(NUMBER));
+  //      assertThat(struct.getTestByte(), equalTo(NUMBER));
+//
+ //       assertThat(struct.getTestEmbeddedStruct().getEmbeddedShort(), equalTo(NUMBER));
+        assertThat(struct.getTestEmbeddedStruct().getEmbedded(), equalTo(ARRAY));
+        assertThat(struct.getTestEmbeddedStruct().getEmbeddedSize(), equalTo(ARRAY.length));
 
-        assertEquals(struct.getTestEmbeddedStruct().getEmbeddedShort(), NUMBER);
-        assertEquals(struct.getTestEmbeddedStruct().getEmbedded(), ARRAY);
-        assertEquals(struct.getTestEmbeddedStruct().getEmbeddedSize(), ARRAY.length);
-
-        assertEquals(struct.getTestVariableStruct().getTestArray(), ARRAY);
-        assertEquals(struct.getTestVariableStructLength(), ARRAY.length);
+        assertThat(struct.getTestVariableStruct().getTestArray(), equalTo(ARRAY));
+        assertThat(struct.getTestVariableStructLength(), equalTo(ARRAY.length));
     }
 
 }

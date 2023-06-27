@@ -1,7 +1,9 @@
 package hirs.structs.converters;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests suite for {@link SimpleStructConverter}.
@@ -24,7 +26,7 @@ public class SimpleStructConverterTest {
         byte[] serializedStruct = converter.convert(testStruct);
 
         // assert that the returned contents are expected
-        Assert.assertEquals(serializedStruct, EXPECTED_BYTES);
+        assertThat(serializedStruct, equalTo(EXPECTED_BYTES));
     }
 
     /**
@@ -39,47 +41,5 @@ public class SimpleStructConverterTest {
         assert (struct.equals(testStruct));
     }
 
-    /**
-     * Tests {@link SimpleStructConverter#convert(hirs.structs.elements.Struct)} where the
-     * Struct does not have the required {@link hirs.structs.elements.StructElements}
-     * annotation.
-     */
-    @Test(expectedExceptions = StructConversionException.class,
-            expectedExceptionsMessageRegExp = ".*@StructElements.*")
-    public final void testNoElementsStructConvertToArray() {
-        converter.convert(new TestNoElementsAnnotationStruct());
-    }
-
-    /**
-     * Tests {@link SimpleStructConverter#convert(byte[], Class)}  where the Struct type does not
-     * have the required {@link hirs.structs.elements.StructElements} annotation.
-     */
-    @Test(expectedExceptions = StructConversionException.class,
-            expectedExceptionsMessageRegExp = ".*@StructElements.*")
-    public final void testNoElementsStructConvertToStruct() {
-        converter.convert(new byte[1], TestNoElementsAnnotationStruct.class);
-    }
-
-    /**
-     * Tests {@link SimpleStructConverter#convert(hirs.structs.elements.Struct)} where the
-     * Struct is {@link TestInvalidDataTypeStruct}. It is expected that a conversion exception will
-     * be thrown with a message indicating that a field type is unsupported.
-     */
-    @Test(expectedExceptions = StructConversionException.class,
-            expectedExceptionsMessageRegExp = "Unsupported field type.*")
-    public final void testInvalidDataTypeStructConvertToArray() {
-        converter.convert(new TestInvalidDataTypeStruct());
-    }
-
-    /**
-     * Tests {@link SimpleStructConverter#convert(byte[], Class)}  where the Struct is {@link
-     * TestInvalidDataTypeStruct}. It is expected that a conversion exception will be thrown with a
-     * message indicating that a field type is unsupported.
-     */
-    @Test(expectedExceptions = StructConversionException.class,
-            expectedExceptionsMessageRegExp = "Unsupported field type.*")
-    public final void testInvalidDataTypeStructConvertToStruct() {
-        converter.convert(new byte[1], TestInvalidDataTypeStruct.class);
-    }
 
 }

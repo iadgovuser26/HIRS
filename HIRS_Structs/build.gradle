@@ -1,33 +1,50 @@
-apply plugin: 'java'
-apply plugin: 'checkstyle'
-
-sourceCompatibility = 1.8
-
-dependencies {
-    compile libs.commons_lang
-
-    testCompile libs.mockito
-    testCompile libs.testng
+plugins {
+    id 'java'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
-ext.configDir = new File(projectDir, 'config')
-ext.checkstyleConfigDir = "$configDir/checkstyle"
-
-checkstyle {
-    toolVersion = '5.7'
-    configFile = checkstyleConfigFile
-    configProperties.put('basedir', checkstyleConfigDir)
-    ignoreFailures = false
-    showViolations = true
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId 'hirs-structs'
-            from components.java
-        }
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
+repositories {
+    mavenCentral()
 
+    flatDir { dirs "lib" }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+   implementation libs.commons.lang3
+   implementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+   implementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+   
+   testImplementation 'org.hamcrest:hamcrest:2.2'
+//   implementation 'org.junit.platform:junit-platform-engine:1.9.3'
+//   implementation 'org.junit.platform:junit-platform-commons:1.9.3'
+     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+     testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
+//   implementation 'org.junit.platform:junit.jupiter.api.Assumptions:5.9.3'
+//   testImplementation 'org.junit.jupiter:junit-platform-suite-commons:1.9.3'
+//   testImplementation libs.testng
+     
+  // spring management
+    compileOnly libs.lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok 
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+		events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+	}
+    //useTestNg()
+}
