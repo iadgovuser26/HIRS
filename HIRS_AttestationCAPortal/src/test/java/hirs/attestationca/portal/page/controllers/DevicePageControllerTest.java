@@ -9,6 +9,7 @@ import static hirs.attestationca.portal.page.Page.DEVICES;
 
 import hirs.attestationca.persist.entity.userdefined.Device;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +17,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.io.IOException;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -55,6 +59,18 @@ public class DevicePageControllerTest extends PageControllerTest {
         super(DEVICES);
     }
 
+
+    /**
+     * Prepares a testing environment.
+     * @throws IOException if there is a problem constructing the test certificate
+     */
+//    @BeforeAll
+//    public void beforeMethod() throws IOException {
+
+        //Create new device and save it
+        //device = new Device(DEVICE_NAME);
+        //device = deviceRepository.save(device);
+//    }
 
     /**
      * Tests retrieving the device list using a mocked device manager.
