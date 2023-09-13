@@ -73,7 +73,6 @@ public class DevicePageControllerTest extends PageControllerTest {
         super(DEVICES);
     }
 
-
     /**
      * Prepares a testing environment.
      * @throws IOException if there is a problem constructing the test certificate
@@ -107,11 +106,19 @@ public class DevicePageControllerTest extends PageControllerTest {
         EndorsementCredential ec = (EndorsementCredential)
                     getTestCertificate(EndorsementCredential.class,
                     TEST_ENDORSEMENT_CREDENTIAL);
-        //ec.setDeviceId(DEVICE_NAME);
-        //certificateRepository.save(ec);
+        ec.setDeviceId(device.getId());
+        certificateRepository.save(ec);
 
+        //Add second EK Cert without a device
+        ec = (EndorsementCredential)
+                getTestCertificate(EndorsementCredential.class, TEST_ENDORSEMENT_CREDENTIAL_2);
+        certificateRepository.save(ec);
 
-
+        //Upload and save Platform Cert
+        PlatformCredential pc = (PlatformCredential)
+                getTestCertificate(PlatformCredential.class, TEST_PLATFORM_CREDENTIAL);
+        pc.setDeviceId(device.getId());
+        certificateRepository.save(pc);
 
     }
 
@@ -154,6 +161,7 @@ public class DevicePageControllerTest extends PageControllerTest {
     public void afterMethod() {
 
         deviceRepository.deleteAll();
+        certificateRepository.deleteAll();
         System.out.println("Number of devices after deleting:" + deviceRepository.count() + "\n");
 
     }
