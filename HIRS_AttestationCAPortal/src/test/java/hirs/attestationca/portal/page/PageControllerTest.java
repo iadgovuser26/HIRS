@@ -60,7 +60,6 @@ public abstract class PageControllerTest {
     /**
      * Sets up the test environment.
      */
-//    @BeforeMethod
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
