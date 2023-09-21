@@ -4,10 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import hirs.attestationca.portal.HIRSApplication;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
-@SpringBootTest
+@WebMvcTest
+//@SpringBootTest
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
 public class ApplicationIntegrationTest {
 

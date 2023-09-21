@@ -6,7 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.TestPropertySources;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,6 +25,19 @@ import static org.hamcrest.Matchers.equalTo;
 /**
  * Base class for PageController tests.
  */
+
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//@WebMvcTest
+/*
+@TestPropertySources({
+        @TestPropertySource(value = "classpath:hibernate.properties"),
+
+        // detects if file exists, if not, ignore errors
+        @TestPropertySource(value = "file:/etc/hirs/aca/application.properties")
+})
+*/
+//@TestPropertySource(locations = "file:/etc/hirs/aca/application.properties")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
