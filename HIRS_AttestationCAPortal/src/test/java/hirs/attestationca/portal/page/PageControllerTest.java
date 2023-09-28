@@ -11,9 +11,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.TestPropertySources;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -38,9 +40,11 @@ import static org.hamcrest.Matchers.equalTo;
 })
 */
 //@TestPropertySource(locations = "file:/etc/hirs/aca/application.properties")
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
+//@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+@WebAppConfiguration
+@ContextConfiguration(classes = PageTestConfiguration.class)
 public abstract class PageControllerTest {
 
     @Autowired

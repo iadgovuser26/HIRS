@@ -44,9 +44,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests that test the URL End Points of DevicePageController.
  */
 //@WebMvcTest(DevicePageController.class)
-@WebAppConfiguration
+//@WebAppConfiguration
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class DevicePageControllerTest extends PageControllerTest {
+public class Old extends PageControllerTest {
 
     private static final String DEVICE_NAME = "Test Device - dell-lat-l-02";
     //private static final String DEVICE_GROUP_NAME = "Test Device Group";
@@ -106,8 +106,8 @@ public class DevicePageControllerTest extends PageControllerTest {
 
         //Upload and save EK Cert
         EndorsementCredential ec = (EndorsementCredential)
-                    getTestCertificate(EndorsementCredential.class,
-                    TEST_ENDORSEMENT_CREDENTIAL);
+                getTestCertificate(EndorsementCredential.class,
+                        TEST_ENDORSEMENT_CREDENTIAL);
         ec.setDeviceId(device.getId());
         certificateRepository.save(ec);
 
@@ -158,7 +158,7 @@ public class DevicePageControllerTest extends PageControllerTest {
 
     /**
      * Cleans up a testing environment.
-    */
+     */
     @AfterAll
     public void afterMethod() {
 
