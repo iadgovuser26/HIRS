@@ -71,7 +71,7 @@ public class Old extends PageControllerTest {
     /**
      * Constructor providing the Page's display and routing specification.
      */
-    public DevicePageControllerTest() {
+    public Old() {
         super(DEVICES);
     }
 

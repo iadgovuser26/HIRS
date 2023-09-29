@@ -12,9 +12,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.TestPropertySources;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.test.context.web.ServletTestExecutionListener;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,9 +47,11 @@ import static org.hamcrest.Matchers.equalTo;
 //@TestPropertySource(locations = "file:/etc/hirs/aca/application.properties")
 //@ExtendWith(SpringExtension.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
 @WebAppConfiguration
 @ContextConfiguration(classes = PageTestConfiguration.class)
+//@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+//        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
 public abstract class PageControllerTest {
 
     @Autowired

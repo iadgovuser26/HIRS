@@ -28,6 +28,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.w3c.dom.Document;
 //import org.testng.collections.Lists;
 
 import java.io.IOException;
@@ -61,11 +62,10 @@ public class DevicePageControllerTest extends PageControllerTest {
 
     @Autowired
     private DeviceRepository deviceRepository;
-    //private final DeviceRepository deviceRepository;
 
     @Autowired
     private CertificateRepository certificateRepository;
-    //private final CertificateRepository certificateRepository;
+
 
 
     /**
@@ -73,6 +73,24 @@ public class DevicePageControllerTest extends PageControllerTest {
      */
     public DevicePageControllerTest() {
         super(DEVICES);
+
+        if (device == null) {
+            System.out.println("\nCONSTRUCTOR: Device is null");
+        } else {
+            System.out.println("\nCONSTRUCTOR: Device is NOT null");
+        }
+        if (deviceRepository == null) {
+            System.out.println("\nCONSTRUCTOR: deviceRepository is null");
+        } else {
+            System.out.println("\nCONSTRUCTOR: deviceRepository is NOT null");
+        }
+        if (certificateRepository == null) {
+            System.out.println("\nCONSTRUCTOR: certificateRepository is null");
+        } else {
+            System.out.println("\nCONSTRUCTOR: certificateRepository is NOT null");
+        }
+
+
     }
 
     /**
@@ -81,6 +99,24 @@ public class DevicePageControllerTest extends PageControllerTest {
      */
     @BeforeAll
     public void beforeMethod() throws IOException {
+
+
+        if (device == null) {
+            System.out.println("\nBEFORE METHOD: Device is null");
+        } else {
+            System.out.println("\nBEFORE METHOD: Device is NOT null");
+        }
+        if (deviceRepository == null) {
+            System.out.println("\nBEFORE METHOD: deviceRepository is null");
+        } else {
+            System.out.println("\nBEFORE METHOD: deviceRepository is NOT null");
+        }
+        if (certificateRepository == null) {
+            System.out.println("\nBEFORE METHOD: certificateRepository is null");
+        } else {
+            System.out.println("\nBEFORE METHOD: certificateRepository is NOT null");
+        }
+
 
         //Create new device and save it
         //InetAddress ia = new InetAddress();
@@ -104,6 +140,7 @@ public class DevicePageControllerTest extends PageControllerTest {
         System.out.println("List of info for each device:");
         System.out.println(deviceRepository.findAll());
 
+        /*
         //Upload and save EK Cert
         EndorsementCredential ec = (EndorsementCredential)
                     getTestCertificate(EndorsementCredential.class,
@@ -121,7 +158,7 @@ public class DevicePageControllerTest extends PageControllerTest {
                 getTestCertificate(PlatformCredential.class, TEST_PLATFORM_CREDENTIAL);
         pc.setDeviceId(device.getId());
         certificateRepository.save(pc);
-
+    */
     }
 
     /**
