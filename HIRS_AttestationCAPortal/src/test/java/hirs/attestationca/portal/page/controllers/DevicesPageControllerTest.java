@@ -1,5 +1,7 @@
 package hirs.attestationca.portal.page.controllers;
 
+import hirs.attestationca.persist.entity.manager.CertificateRepository;
+import hirs.attestationca.persist.entity.manager.DeviceRepository;
 import hirs.attestationca.portal.page.PageControllerTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -43,17 +45,13 @@ public class DevicesPageControllerTest extends PageControllerTest {
     private static final String TEST_PLATFORM_CREDENTIAL
             = "/platform_credentials/Intel_pc.cer";
 
-    private DeviceGroup group;
     private Device device;
 
     @Autowired
-    private DeviceManager deviceManager;
+    private DeviceRepository deviceManager;
 
     @Autowired
-    private DeviceGroupManager deviceGroupManager;
-
-    @Autowired
-    private CertificateManager certificateManager;
+    private CertificateRepository certificateManager;
 
     /**
      * Constructor providing the Page's display and routing specification.
@@ -68,9 +66,6 @@ public class DevicesPageControllerTest extends PageControllerTest {
      */
     @BeforeClass
     public void beforeMethod() throws IOException {
-        //Create new device group
-        group = new DeviceGroup(DEVICE_GROUP_NAME);
-        group = deviceGroupManager.saveDeviceGroup(group);
 
         //Create new device and save it
         device = new Device(DEVICE_NAME);

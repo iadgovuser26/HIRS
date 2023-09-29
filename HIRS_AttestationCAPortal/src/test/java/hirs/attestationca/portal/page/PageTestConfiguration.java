@@ -1,12 +1,13 @@
 package hirs.attestationca.portal.page;
 
-import hirs.data.persist.certificate.CertificateAuthorityCredential;
+import hirs.attestationca.portal.PageConfiguration;
+import hirs.attestationca.persist.entity.userdefined.certificate.CertificateAuthorityCredential;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.cert.X509Certificate;
 import java.util.Properties;
+
 
 /**
  * A configuration class for testing Attestation CA Portal classes that require a database.
