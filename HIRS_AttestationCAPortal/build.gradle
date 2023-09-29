@@ -58,6 +58,13 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation libs.testng
+
+
+    testImplementation libs.testng
+}
+
+test {
+    useTestNG()
 }
 
 ospackage {
