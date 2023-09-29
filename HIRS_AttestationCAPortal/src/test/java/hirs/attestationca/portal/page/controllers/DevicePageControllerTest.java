@@ -10,7 +10,6 @@ import hirs.attestationca.persist.enums.AppraisalStatus;
 import hirs.attestationca.persist.enums.HealthStatus;
 import hirs.attestationca.portal.page.PageControllerTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testng.annotations.Test;
 
 import static hirs.attestationca.portal.page.Page.DEVICES;
@@ -23,7 +22,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.web.WebAppConfiguration;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.testng.annotations.BeforeClass;
 
 /**
@@ -31,7 +30,7 @@ import org.testng.annotations.BeforeClass;
  */
 @WebAppConfiguration
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-public class DevicesPageControllerTest extends PageControllerTest {
+public class DevicePageControllerTest extends PageControllerTest {
 
     private static final String DEVICE_NAME = "Test Device";
     private static final String DEVICE_GROUP_NAME = "Test Device Group";
@@ -53,7 +52,7 @@ public class DevicesPageControllerTest extends PageControllerTest {
     /**
      * Constructor providing the Page's display and routing specification.
      */
-    public DevicesPageControllerTest() {
+    public DevicePageControllerTest() {
         super(DEVICES);
     }
 
