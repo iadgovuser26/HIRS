@@ -45,7 +45,8 @@ import static org.hamcrest.Matchers.equalTo;
 })
 */
 //@TestPropertySource(locations = "file:/etc/hirs/aca/application.properties")
-//@ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
 @WebAppConfiguration
