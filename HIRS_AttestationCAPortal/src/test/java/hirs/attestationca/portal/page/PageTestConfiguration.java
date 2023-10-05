@@ -6,9 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -26,6 +32,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @Import({ PageConfiguration.class })
+@EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
 public class PageTestConfiguration {
 
     /**
@@ -73,14 +80,42 @@ public class PageTestConfiguration {
      *
      * @return session factory
      */
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(dataSource());
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//        sessionFactory.setPackagesToScan("hirs");
+//        return sessionFactory;
+//    }
+
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        sessionFactory.setPackagesToScan("hirs");
-        return sessionFactory;
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        final LocalContainerEntityManagerFactoryBean entityManagerBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerBean.setDataSource(dataSource());
+        entityManagerBean.setPackagesToScan("hirs.attestationca.persist.entity");
+
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        entityManagerBean.setJpaVendorAdapter(vendorAdapter);
+        //entityManagerBean.setJpaProperties(additionalProperties());
+
+        entityManagerBean.setJpaProperties(hibernateProperties());
+
+
+        return entityManagerBean;
     }
+
+    //    final Properties additionalProperties() {
+//        final Properties hibernateProperties = new Properties();
+//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
+//                environment.getProperty("hibernate.hbm2ddl.auto"));
+//        hibernateProperties.setProperty("hibernate.dialect",
+//                environment.getProperty("hibernate.dialect"));
+//        hibernateProperties.setProperty("hibernate.cache.use_second_level_cache",
+//                "false");
+//
+//        return hibernateProperties;
+//    }
 
     /**
      * Generates properties using configuration file that will be used to configure the session
@@ -94,5 +129,12 @@ public class PageTestConfiguration {
         properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.put("hibernate.current_session_context_class", "thread");
         return properties;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        final JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+        return transactionManager;
     }
 }

@@ -35,33 +35,19 @@ import static org.hamcrest.Matchers.equalTo;
  * Base class for PageController tests.
  */
 
-//@SpringBootTest
+
 //@AutoConfigureMockMvc
 //@WebMvcTest
-
-//@TestPropertySources({
-//        @TestPropertySource(value = "classpath:hibernate.properties"),
-//
-//        // detects if file exists, if not, ignore errors
-//        @TestPropertySource(value = "file:/etc/hirs/aca/application-test.properties")
-//})
-
-//@TestPropertySource(locations = "file:/etc/hirs/aca/application-test.properties")
-
-//@ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
-//@WebAppConfiguration
 //@ContextConfiguration(classes = PageTestConfiguration.class)
+//@EnableAutoConfiguration(exclude = {PersistenceJPAConfig.class})
 
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
         DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-
 @ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class, PageTestConfiguration.class})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
 @WebAppConfiguration
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
-//@EnableAutoConfiguration(exclude = {PersistenceJPAConfig.class})
 public abstract class PageControllerTest {
 
     @Autowired
@@ -112,7 +98,7 @@ public abstract class PageControllerTest {
      * @throws Exception if test fails
      */
     @Test
-    public final void doTestPageExists() throws Exception {
+    public final void doTestPagesExist() throws Exception {
         // Add prefix path for page verification
         String pagePath = "/" + page.getPrefixPath() + page.getViewName();
         if (page.getPrefixPath() == null) {
