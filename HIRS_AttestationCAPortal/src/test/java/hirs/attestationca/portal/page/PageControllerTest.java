@@ -1,11 +1,13 @@
 package hirs.attestationca.portal.page;
 
-import hirs.attestationca.portal.HIRSApplication;
+//import hirs.attestationca.portal.HIRSApplication;
+//import hirs.attestationca.portal.PersistenceJPAConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,23 +38,30 @@ import static org.hamcrest.Matchers.equalTo;
 //@SpringBootTest
 //@AutoConfigureMockMvc
 //@WebMvcTest
-/*
-@TestPropertySources({
-        @TestPropertySource(value = "classpath:hibernate.properties"),
 
-        // detects if file exists, if not, ignore errors
-        @TestPropertySource(value = "file:/etc/hirs/aca/application.properties")
-})
-*/
-//@TestPropertySource(locations = "file:/etc/hirs/aca/application.properties")
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
+//@TestPropertySources({
+//        @TestPropertySource(value = "classpath:hibernate.properties"),
+//
+//        // detects if file exists, if not, ignore errors
+//        @TestPropertySource(value = "file:/etc/hirs/aca/application-test.properties")
+//})
+
+//@TestPropertySource(locations = "file:/etc/hirs/aca/application-test.properties")
+
+//@ExtendWith(SpringExtension.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+//@WebAppConfiguration
+//@ContextConfiguration(classes = PageTestConfiguration.class)
+
+@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
+
+@ExtendWith(SpringExtension.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class, PageTestConfiguration.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
 @WebAppConfiguration
-@ContextConfiguration(classes = PageTestConfiguration.class)
-//@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-//        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+//@EnableAutoConfiguration(exclude = {PersistenceJPAConfig.class})
 public abstract class PageControllerTest {
 
     @Autowired

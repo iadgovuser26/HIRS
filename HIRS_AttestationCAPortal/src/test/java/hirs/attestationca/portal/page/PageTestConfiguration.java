@@ -5,6 +5,7 @@ import hirs.attestationca.persist.entity.userdefined.certificate.CertificateAuth
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -39,7 +40,9 @@ public class PageTestConfiguration {
      * @throws URISyntaxException if there's a syntax error on the path to the cert
      * @throws IOException exception reading the file
      */
-    @Bean
+    //@Bean
+    @Bean("test_acaCertificate")
+    @Primary
     public X509Certificate acaCertificate() throws URISyntaxException, IOException {
 
         CertificateAuthorityCredential credential = new CertificateAuthorityCredential(
@@ -54,7 +57,9 @@ public class PageTestConfiguration {
      *
      * @return test data source
      */
-    @Bean
+    //@Bean
+    @Bean("test_dataSource")
+    @Primary
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .generateUniqueName(true)
