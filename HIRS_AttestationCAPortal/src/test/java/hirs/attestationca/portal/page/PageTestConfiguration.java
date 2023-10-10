@@ -2,10 +2,7 @@ package hirs.attestationca.portal.page;
 
 import hirs.attestationca.portal.PageConfiguration;
 import hirs.attestationca.persist.entity.userdefined.certificate.CertificateAuthorityCredential;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -30,9 +27,9 @@ import java.util.Properties;
  * This apparently is needed to appease spring tests in the TestNG runner.
  */
 @Configuration
-@EnableTransactionManagement
 @Import({ PageConfiguration.class })
 @EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
+//@EnableTransactionManagement
 public class PageTestConfiguration {
 
     /**
@@ -73,13 +70,14 @@ public class PageTestConfiguration {
                 .setType(EmbeddedDatabaseType.HSQL).build();
     }
 
-    /**
-     * Configures a session factory bean that in turn configures the hibernate session factory.
-     * Enables auto scanning of annotations such that entities do not need to be registered in a
-     * hibernate configuration file.
-     *
-     * @return session factory
-     */
+    // from master PageTestConfiguration:
+//    /**
+//     * Configures a session factory bean that in turn configures the hibernate session factory.
+//     * Enables auto scanning of annotations such that entities do not need to be registered in a
+//     * hibernate configuration file.
+//     *
+//     * @return session factory
+//     */
 //    @Bean
 //    public LocalSessionFactoryBean sessionFactory() {
 //        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -89,22 +87,22 @@ public class PageTestConfiguration {
 //        return sessionFactory;
 //    }
 
+
+    // from PersistenceJPAConfig:
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+
         final LocalContainerEntityManagerFactoryBean entityManagerBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerBean.setDataSource(dataSource());
         entityManagerBean.setPackagesToScan("hirs.attestationca.persist.entity");
-
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerBean.setJpaVendorAdapter(vendorAdapter);
-        //entityManagerBean.setJpaProperties(additionalProperties());
-
         entityManagerBean.setJpaProperties(hibernateProperties());
-
 
         return entityManagerBean;
     }
 
+    // from PersistenceJPAConfig
     //    final Properties additionalProperties() {
 //        final Properties hibernateProperties = new Properties();
 //        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",

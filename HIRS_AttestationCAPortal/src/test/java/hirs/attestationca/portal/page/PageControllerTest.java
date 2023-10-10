@@ -1,22 +1,15 @@
 package hirs.attestationca.portal.page;
 
-//import hirs.attestationca.portal.HIRSApplication;
-//import hirs.attestationca.portal.PersistenceJPAConfig;
+import hirs.attestationca.portal.HIRSApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.TestPropertySources;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
@@ -41,12 +34,16 @@ import static org.hamcrest.Matchers.equalTo;
 //@ContextConfiguration(classes = PageTestConfiguration.class)
 //@EnableAutoConfiguration(exclude = {PersistenceJPAConfig.class})
 
-@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-@ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
-@WebAppConfiguration
+//@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+//        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
+//@ExtendWith(SpringExtension.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class, PageTestConfiguration.class})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class })
+@SpringBootTest
+@AutoConfigureMockMvc
+//@WebAppConfiguration
+@ContextConfiguration(classes = PageTestConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
 public abstract class PageControllerTest {
 

@@ -19,7 +19,6 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan("hirs.attestationca.portal.page.controllers")
-//@EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
 public class PageConfiguration {
 
     /**
