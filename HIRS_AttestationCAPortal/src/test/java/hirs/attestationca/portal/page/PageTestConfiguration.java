@@ -26,8 +26,8 @@ import java.util.Properties;
  * A configuration class for testing Attestation CA Portal classes that require a database.
  * This apparently is needed to appease spring tests in the TestNG runner.
  */
+//@Import({ PageConfiguration.class })
 @Configuration
-@Import({ PageConfiguration.class })
 @EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
 //@EnableTransactionManagement
 public class PageTestConfiguration {

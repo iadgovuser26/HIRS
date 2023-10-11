@@ -46,9 +46,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests that test the URL End Points of DevicePageController.
  */
 //@WebMvcTest(DevicePageController.class)
-@WebAppConfiguration
-//@Controller
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+//@WebAppConfiguration
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DevicePageControllerTest extends PageControllerTest {
 
     private static final String DEVICE_NAME = "Test Device - dell-lat-l-02";
@@ -65,8 +64,8 @@ public class DevicePageControllerTest extends PageControllerTest {
     @Autowired
     private DeviceRepository deviceRepository;
 
-    //@Autowired
-    //private CertificateRepository certificateRepository;
+    @Autowired
+    private CertificateRepository certificateRepository;
 
 
 
@@ -86,13 +85,13 @@ public class DevicePageControllerTest extends PageControllerTest {
         } else {
             System.out.println("\nCONSTRUCTOR: deviceRepository is NOT null");
         }
-        /*
+
         if (certificateRepository == null) {
             System.out.println("\nCONSTRUCTOR: certificateRepository is null");
         } else {
             System.out.println("\nCONSTRUCTOR: certificateRepository is NOT null");
         }
-        */
+
 
     }
 
@@ -114,13 +113,13 @@ public class DevicePageControllerTest extends PageControllerTest {
         } else {
             System.out.println("\nBEFORE METHOD: deviceRepository is NOT null");
         }
-        /*
+
         if (certificateRepository == null) {
             System.out.println("\nBEFORE METHOD: certificateRepository is null");
         } else {
             System.out.println("\nBEFORE METHOD: certificateRepository is NOT null");
         }
-        */
+
 
         //Create new device and save it
         //InetAddress ia = new InetAddress();
@@ -144,7 +143,7 @@ public class DevicePageControllerTest extends PageControllerTest {
         System.out.println("List of info for each device:");
         System.out.println(deviceRepository.findAll());
 
-        /*
+
         //Upload and save EK Cert
         EndorsementCredential ec = (EndorsementCredential)
                     getTestCertificate(EndorsementCredential.class,
@@ -162,7 +161,7 @@ public class DevicePageControllerTest extends PageControllerTest {
                 getTestCertificate(PlatformCredential.class, TEST_PLATFORM_CREDENTIAL);
         pc.setDeviceId(device.getId());
         certificateRepository.save(pc);
-    */
+    
     }
 
     /**
@@ -219,12 +218,16 @@ public class DevicePageControllerTest extends PageControllerTest {
     //@Rollback
     //@Transactional
     public void getDeviceList() throws Exception {
+
+
+
         // perform test
         getMockMvc().perform(MockMvcRequestBuilders
-                        .get("/devices/list"))
+        //                .get("/devices/list"))
+                .get("/HIRS_AttestationCAPortal/portal/devices/list"))
                 .andExpect(status().isOk())
-        //        .andExpect(jsonPath("$.data", hasSize(1)))
-        //        .andReturn()
+                .andExpect(jsonPath("$.data", hasSize(1)))
+                .andReturn()
         ;
     }
 

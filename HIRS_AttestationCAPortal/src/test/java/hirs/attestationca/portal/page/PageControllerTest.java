@@ -29,24 +29,11 @@ import static org.hamcrest.Matchers.equalTo;
  * Base class for PageController tests.
  */
 
-
-//@AutoConfigureMockMvc
-//@WebMvcTest
-//@ContextConfiguration(classes = PageTestConfiguration.class)
-//@EnableAutoConfiguration(exclude = {PersistenceJPAConfig.class})
-
-//@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-//        DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
 //@ExtendWith(SpringExtension.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class, PageTestConfiguration.class})
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class })
+//@ContextConfiguration(classes = PageTestConfiguration.class)
 @SpringBootTest
-@AutoConfigureMockMvc
-//@WebAppConfiguration
-@ContextConfiguration(classes = PageTestConfiguration.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
-//@SpringJUnitWebConfig(locations = "hirs.attestationca.portal.page.controllers")
 public abstract class PageControllerTest {
 
     @Autowired
@@ -101,19 +88,20 @@ public abstract class PageControllerTest {
         // Add prefix path for page verification
         String pagePath = "/" + page.getPrefixPath() + page.getViewName();
         if (page.getPrefixPath() == null) {
-            pagePath = "/" + page.getViewName();
+            //pagePath = "/" + page.getViewName();
+            pagePath = "/HIRS_AttestationCAPortal/portal/" + page.getViewName();
         }
         System.out.println("Page Path: " + pagePath);
 
         getMockMvc()
                 .perform(MockMvcRequestBuilders.get(pagePath))
                 .andExpect(status().isOk())
-        //        .andExpect(view().name(page.getViewName()))
-        //        .andExpect(forwardedUrl("/WEB-INF/jsp/" + page.getViewName() + ".jsp"))
-        //        .andExpect(model().attribute(PageController.PAGE_ATTRIBUTE, equalTo(page)))
-        //        .andExpect(model().attribute(
-        //                PageController.PAGES_ATTRIBUTE, equalTo(Page.values()))
-        //        )
+                .andExpect(view().name(page.getViewName()))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/" + page.getViewName() + ".jsp"))
+                .andExpect(model().attribute(PageController.PAGE_ATTRIBUTE, equalTo(page)))
+                .andExpect(model().attribute(
+                        PageController.PAGES_ATTRIBUTE, equalTo(Page.values()))
+                )
         ;
     }
 }
