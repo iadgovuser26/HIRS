@@ -161,7 +161,7 @@ public class DevicePageControllerTest extends PageControllerTest {
                 getTestCertificate(PlatformCredential.class, TEST_PLATFORM_CREDENTIAL);
         pc.setDeviceId(device.getId());
         certificateRepository.save(pc);
-    
+
     }
 
     /**
@@ -203,7 +203,7 @@ public class DevicePageControllerTest extends PageControllerTest {
     public void afterMethod() {
 
         deviceRepository.deleteAll();
-        //certificateRepository.deleteAll();
+        certificateRepository.deleteAll();
         System.out.println("Number of devices after deleting:" + deviceRepository.count() + "\n");
 
     }
@@ -219,12 +219,17 @@ public class DevicePageControllerTest extends PageControllerTest {
     //@Transactional
     public void getDeviceList() throws Exception {
 
-
+        // Add prefix path for page verification
+        String pagePath = "/" + getPage().getPrefixPath() + getPage().getViewName();
+        if (getPage().getPrefixPath() == null) {
+            pagePath = "/" + getPage().getViewName();
+        }
+        pagePath = pagePath + "/list";
+        System.out.println("Device List Page Path: " + pagePath);
 
         // perform test
-        getMockMvc().perform(MockMvcRequestBuilders
-        //                .get("/devices/list"))
-                .get("/HIRS_AttestationCAPortal/portal/devices/list"))
+        getMockMvc()
+                .perform(MockMvcRequestBuilders.get(pagePath))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data", hasSize(1)))
                 .andReturn()

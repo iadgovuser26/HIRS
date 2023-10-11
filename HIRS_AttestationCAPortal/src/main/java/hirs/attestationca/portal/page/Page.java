@@ -1,10 +1,12 @@
 package hirs.attestationca.portal.page;
 
 import hirs.utils.VersionHelper;
+import lombok.Getter;
 
 /**
  * Contains attributes required to display a portal page and its menu link.
  */
+@Getter
 public enum Page {
 
     /**
@@ -43,7 +45,7 @@ public enum Page {
     /**
      * Page to display registered devices.
      */
-    DEVICES("Devices", "ic_devices", "first"),
+    DEVICES("Devices", "ic_devices", "first", "HIRS_AttestationCAPortal/portal/"),
     /**
      * Page to display RIMs.
      */
@@ -70,11 +72,9 @@ public enum Page {
     private final String title;
     private final String subtitle;
     private final String icon;
-
     private final boolean hasMenu;
-    private final String menuLinkClass;
     private final boolean inMenu;
-
+    private final String menuLinkClass;
     private final String prefixPath;
     private final String viewName;
 
@@ -146,79 +146,79 @@ public enum Page {
         this(title, null, icon, true, true, null, null);
     }
 
-    /**
-     * Returns the title of the page.
-     *
-     * @return the title of the page.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Returns the subtitle of the page.
-     *
-     * @return the subtitle of the page.
-     */
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    /**
-     * Returns the base filename of the icon for page. E.g. "ic_my_icon", which will be appended
-     * with appropriate size string (_24dp/_48dp) and file extension (.png) when used.
-     *
-     * @return the base filename of the icon for page.
-     */
-    public String getIcon() {
-        return icon;
-    }
-
-    /**
-     * Returns true if the page should be displayed in the navigation menu.
-     *
-     * @return true if the page should be displayed in the navigation menu.
-     */
-    public boolean getInMenu() {
-        return inMenu;
-    }
-
-    /**
-     * Returns the css class to add to the menu link to display it appropriately. E.g. "first" if
-     * the link is the first in a group to separate it visually from the previous group.
-     *
-     * @return he class to add to the menu link to display it appropriately.
-     */
-    public String getMenuLinkClass() {
-        return menuLinkClass;
-    }
-
-    /**
-     * Returns true if the page should display the navigation menu.
-     *
-     * @return true if the page should display the navigation menu.
-     */
-    public boolean getHasMenu() {
-        return hasMenu;
-    }
-
-    /**
-     * Return the page's view name.
-     *
-     * @return the page's view name
-     */
-    public String getViewName() {
-        return viewName;
-    }
-
-    /**
-     * Return the page's view name.
-     *
-     * @return the page's view name
-     */
-    public String getPrefixPath() {
-        return prefixPath;
-    }
+//    /**
+//     * Returns the title of the page.
+//     *
+//     * @return the title of the page.
+//     */
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    /**
+//     * Returns the subtitle of the page.
+//     *
+//     * @return the subtitle of the page.
+//     */
+//    public String getSubtitle() {
+//        return subtitle;
+//    }
+//
+//    /**
+//     * Returns the base filename of the icon for page. E.g. "ic_my_icon", which will be appended
+//     * with appropriate size string (_24dp/_48dp) and file extension (.png) when used.
+//     *
+//     * @return the base filename of the icon for page.
+//     */
+//    public String getIcon() {
+//        return icon;
+//    }
+//
+//    /**
+//     * Returns true if the page should display the navigation menu.
+//     *
+//     * @return true if the page should display the navigation menu.
+//     */
+//    public boolean getHasMenu() {
+//        return hasMenu;
+//    }
+//
+//    /**
+//     * Returns true if the page should be displayed in the navigation menu.
+//     *
+//     * @return true if the page should be displayed in the navigation menu.
+//     */
+//    public boolean getInMenu() {
+//        return inMenu;
+//    }
+//
+//    /**
+//     * Returns the css class to add to the menu link to display it appropriately. E.g. "first" if
+//     * the link is the first in a group to separate it visually from the previous group.
+//     *
+//     * @return he class to add to the menu link to display it appropriately.
+//     */
+//    public String getMenuLinkClass() {
+//        return menuLinkClass;
+//    }
+//
+//    /**
+//     * Return the page's view name.
+//     *
+//     * @return the page's view name
+//     */
+//    public String getPrefixPath() {
+//        return prefixPath;
+//    }
+//
+//    /**
+//     * Return the page's view name.
+//     *
+//     * @return the page's view name
+//     */
+//    public String getViewName() {
+//        return viewName;
+//    }
 
 }
 

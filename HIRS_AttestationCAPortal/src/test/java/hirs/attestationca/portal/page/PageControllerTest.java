@@ -29,8 +29,9 @@ import static org.hamcrest.Matchers.equalTo;
  * Base class for PageController tests.
  */
 
+//@WebAppConfiguration
 //@ExtendWith(SpringExtension.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ HIRSApplication.class, PageTestConfiguration.class})
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
 //@ContextConfiguration(classes = PageTestConfiguration.class)
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
@@ -88,8 +89,8 @@ public abstract class PageControllerTest {
         // Add prefix path for page verification
         String pagePath = "/" + page.getPrefixPath() + page.getViewName();
         if (page.getPrefixPath() == null) {
-            //pagePath = "/" + page.getViewName();
-            pagePath = "/HIRS_AttestationCAPortal/portal/" + page.getViewName();
+            pagePath = "/" + page.getViewName();
+            //pagePath = "/HIRS_AttestationCAPortal/portal/" + page.getViewName();
         }
         System.out.println("Page Path: " + pagePath);
 
