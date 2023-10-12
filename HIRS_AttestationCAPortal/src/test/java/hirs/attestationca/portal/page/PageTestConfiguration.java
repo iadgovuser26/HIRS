@@ -63,32 +63,22 @@ public class PageTestConfiguration {
      */
     //@Bean
     @Bean("test_dataSource")
-    @Primary
+    //@Primary
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .generateUniqueName(true)
                 .setType(EmbeddedDatabaseType.HSQL).build();
     }
 
-    // from master PageTestConfiguration:
-//    /**
-//     * Configures a session factory bean that in turn configures the hibernate session factory.
-//     * Enables auto scanning of annotations such that entities do not need to be registered in a
-//     * hibernate configuration file.
-//     *
-//     * @return session factory
-//     */
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(dataSource());
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        sessionFactory.setPackagesToScan("hirs");
-//        return sessionFactory;
-//    }
-
-
-    // from PersistenceJPAConfig:
+    /**
+     * Configures a session factory bean that in turn configures the hibernate session factory.
+     * Enables auto scanning of annotations such that entities do not need to be registered in a
+     * hibernate configuration file.
+     *
+     * @return session factory
+     */
+    //@Bean("test_entityMangerFactory")
+    //@Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
@@ -101,19 +91,6 @@ public class PageTestConfiguration {
 
         return entityManagerBean;
     }
-
-    // from PersistenceJPAConfig
-    //    final Properties additionalProperties() {
-//        final Properties hibernateProperties = new Properties();
-//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
-//                environment.getProperty("hibernate.hbm2ddl.auto"));
-//        hibernateProperties.setProperty("hibernate.dialect",
-//                environment.getProperty("hibernate.dialect"));
-//        hibernateProperties.setProperty("hibernate.cache.use_second_level_cache",
-//                "false");
-//
-//        return hibernateProperties;
-//    }
 
     /**
      * Generates properties using configuration file that will be used to configure the session
@@ -129,6 +106,11 @@ public class PageTestConfiguration {
         return properties;
     }
 
+    /**
+     * Generates JPA transaction manager.
+     *
+     * @return transaction manager
+     */
     @Bean
     public PlatformTransactionManager transactionManager() {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();

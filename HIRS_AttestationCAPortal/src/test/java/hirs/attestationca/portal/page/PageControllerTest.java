@@ -1,22 +1,18 @@
 package hirs.attestationca.portal.page;
 
+//import hirs.attestationca.portal.PersistenceJPAConfig;
 import hirs.attestationca.portal.HIRSApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
-import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.web.ServletTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,15 +23,28 @@ import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Base class for PageController tests.
+ *
  */
 
+//@EnableAutoConfiguration(exclude= PersistenceJPAConfig.class)
+//@ComponentScan(basePackages = {"hirs.attestationca.portal"},
+//        excludeFilters = {@ComponentScan.Filter(
+//                type = FilterType.ASSIGNABLE_TYPE,
+//                value = {PersistenceJPAConfig.class})
+//        })
+//@ComponentScan(excludeFilters={@ComponentScan.Filter(
+//                type= FilterType.ASSIGNABLE_TYPE,
+//                value=PersistenceJPAConfig.class)})
 //@WebAppConfiguration
 //@ExtendWith(SpringExtension.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
-//@ContextConfiguration(classes = PageTestConfiguration.class)
+//@SpringBootTest(classes={ PageTestConfiguration.class})
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+//@ContextConfiguration(classes = {HIRSApplication.class, PageTestConfiguration.class})
 public abstract class PageControllerTest {
+
+    private String prePrefixPath = "HIRS_AttestationCAPortal/portal/";
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -50,6 +59,15 @@ public abstract class PageControllerTest {
      */
     public PageControllerTest(final Page page) {
         this.page = page;
+    }
+
+    /**
+     * Returns the Page's pre-prePrefix path for routing.
+     *
+     * @return the Page's pre-prePrefix path
+     */
+    public String getPrePrefixPath() {
+        return prePrefixPath;
     }
 
     /**
@@ -86,13 +104,14 @@ public abstract class PageControllerTest {
      */
     @Test
     public final void doTestPagesExist() throws Exception {
+
         // Add prefix path for page verification
-        String pagePath = "/" + page.getPrefixPath() + page.getViewName();
+        String pagePath = "/" + prePrefixPath + page.getPrefixPath() + getPage().getViewName();
         if (page.getPrefixPath() == null) {
-            pagePath = "/" + page.getViewName();
-            //pagePath = "/HIRS_AttestationCAPortal/portal/" + page.getViewName();
+            pagePath = "/" + prePrefixPath + getPage().getViewName();
         }
-        System.out.println("Page Path: " + pagePath);
+
+        System.out.println("\nHEEEEEERRRRE: device page:" + pagePath);
 
         getMockMvc()
                 .perform(MockMvcRequestBuilders.get(pagePath))
@@ -102,8 +121,7 @@ public abstract class PageControllerTest {
                 .andExpect(model().attribute(PageController.PAGE_ATTRIBUTE, equalTo(page)))
                 .andExpect(model().attribute(
                         PageController.PAGES_ATTRIBUTE, equalTo(Page.values()))
-                )
-        ;
+                );
     }
 }
 
