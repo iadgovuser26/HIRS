@@ -2,16 +2,19 @@ package hirs.attestationca.portal.page;
 
 import hirs.attestationca.portal.PageConfiguration;
 import hirs.attestationca.persist.entity.userdefined.certificate.CertificateAuthorityCredential;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -27,8 +30,18 @@ import java.util.Properties;
  * A configuration class for testing Attestation CA Portal classes that require a database.
  * This apparently is needed to appease spring tests in the TestNG runner.
  */
-//@Import({ PageConfiguration.class })
+//@Profile("test")
+@Import({ PageConfiguration.class })
 @TestConfiguration
+//@ComponentScan(excludeFilters  = {@ComponentScan.Filter(
+//                type = FilterType.ASSIGNABLE_TYPE,
+//                classes = {PersistenceJPAConfig.class})})
+//@ComponentScan(basePackages = {"hirs"},
+//        excludeFilters = {@ComponentScan.Filter(
+//                type = FilterType.ASPECTJ,
+//                classes = {PersistenceJPAConfig.class})})
+//@EnableAutoConfiguration(exclude= hibernate.properties)
+//@TestPropertySource(value = "classpath:application-test.properties")
 //@Configuration
 @EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
 //@EnableTransactionManagement
@@ -39,6 +52,9 @@ public class PageTestConfiguration {
      */
     public static final String FAKE_ROOT_CA = "/certificates/fakeCA.pem";
 
+    @Autowired
+    private Environment environment;
+
     /**
      * Gets a test x509 cert as the ACA cert for ACA portal tests.
      *
@@ -46,9 +62,9 @@ public class PageTestConfiguration {
      * @throws URISyntaxException if there's a syntax error on the path to the cert
      * @throws IOException exception reading the file
      */
-    //@Bean
-    @Bean("test_acaCertificate")
-    @Primary
+    @Bean
+    //@Bean("test_acaCertificate")
+    //@Primary
     public X509Certificate acaCertificate() throws URISyntaxException, IOException {
 
         CertificateAuthorityCredential credential = new CertificateAuthorityCredential(
@@ -63,8 +79,8 @@ public class PageTestConfiguration {
      *
      * @return test data source
      */
-    //@Bean
-    @Bean("test_dataSource")
+    @Bean
+    //@Bean("test_dataSource")
     //@Primary
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
@@ -81,7 +97,7 @@ public class PageTestConfiguration {
      */
     //@Bean("test_entityMangerFactory")
     @Bean
-    @Primary
+    //@Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
         final LocalContainerEntityManagerFactoryBean entityManagerBean = new LocalContainerEntityManagerFactoryBean();
@@ -100,15 +116,41 @@ public class PageTestConfiguration {
      *
      * @return properties for hibernate session factory
      */
-    private Properties hibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.hbm2ddl.auto", "create");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-        properties.put("hibernate.current_session_context_class", "thread");
-        //properties.put("hibernate.connection.username", "hirs_db");
-        //properties.put("hibernate.connection.password", "hirs_db");
-        return properties;
+    final Properties hibernateProperties() {
+        final Properties hibernateProperties = new Properties();
+//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
+//                "create");
+//        hibernateProperties.setProperty("hibernate.dialect",
+//                "org.hibernate.dialect.HSQLDialect");
+//        hibernateProperties.setProperty("hibernate.current_session_context_class",
+//                "thread");
+
+
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.hbm2ddl.auto: " + environment.getProperty("hibernate.hbm2ddl.auto"));
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.dialect: " + environment.getProperty("hibernate.dialect"));
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.connection.username: " + environment.getProperty("hibernate.connection.username"));
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.connection.password: " + environment.getProperty("hibernate.connection.password"));
+
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
+                environment.getProperty("hibernate.hbm2ddl.auto"));
+        hibernateProperties.setProperty("hibernate.dialect",
+                environment.getProperty("hibernate.dialect"));
+        hibernateProperties.setProperty("hibernate.current_session_context_class",
+                "thread");
+//
+//        hibernateProperties.setProperty("hibernate.connection.username",
+//                null);
+//        hibernateProperties.setProperty("hibernate.connection.password",
+//                null);
+
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.hbm2ddl.auto: " + environment.getProperty("hibernate.hbm2ddl.auto"));
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.dialect: " + environment.getProperty("hibernate.dialect"));
+        //System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.connection.username: " + environment.getProperty("hibernate.connection.username"));
+        //System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXX hibernate.connection.password: " + environment.getProperty("hibernate.connection.password"));
+
+        return hibernateProperties;
     }
+
 
     /**
      * Generates JPA transaction manager.

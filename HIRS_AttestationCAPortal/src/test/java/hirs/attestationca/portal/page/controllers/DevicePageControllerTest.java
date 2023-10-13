@@ -13,6 +13,8 @@ import static hirs.attestationca.portal.page.Page.DEVICES;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -24,6 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Integration tests that test the URL End Points of DevicePageController.
  */
+//@WebAppConfiguration
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class DevicePageControllerTest extends PageControllerTest {
 
     private static final String DEVICE_NAME = "Test Device - dell-lat-l-02";

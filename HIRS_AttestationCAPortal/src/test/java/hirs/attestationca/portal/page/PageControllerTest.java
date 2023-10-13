@@ -12,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -50,8 +53,10 @@ import static org.hamcrest.Matchers.equalTo;
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
 //@SpringBootTest(classes={ PageTestConfiguration.class})
 @SpringBootTest
+//@Profile("test")
+@ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
-@ContextConfiguration(classes = {PageTestConfiguration.class})
+@ContextConfiguration(classes = PageTestConfiguration.class)
 //@ContextConfiguration(classes = {HIRSApplication.class, PageTestConfiguration.class})
 public abstract class PageControllerTest {
 
