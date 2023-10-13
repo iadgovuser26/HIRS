@@ -129,8 +129,6 @@ public class DevicePageControllerTest extends PageControllerTest {
             pagePath = "/" + getPrePrefixPath() + getPage().getViewName() + "/list";
         }
 
-        System.out.println("\nHEEEEEERRRRE: device list page:" + pagePath);
-
         // perform test
         getMockMvc()
                 .perform(MockMvcRequestBuilders.get(pagePath))

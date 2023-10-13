@@ -30,17 +30,28 @@ import static org.hamcrest.Matchers.equalTo;
 //@ComponentScan(basePackages = {"hirs.attestationca.portal"},
 //        excludeFilters = {@ComponentScan.Filter(
 //                type = FilterType.ASSIGNABLE_TYPE,
-//                value = {PersistenceJPAConfig.class})
-//        })
+//                value = {PersistenceJPAConfig.class})})
 //@ComponentScan(excludeFilters={@ComponentScan.Filter(
 //                type= FilterType.ASSIGNABLE_TYPE,
 //                value=PersistenceJPAConfig.class)})
+//@ComponentScan(basePackages = {"hirs.attestationca.portal"},
+//        excludeFilters = {@ComponentScan.Filter(
+//                type = FilterType.ASSIGNABLE_TYPE,
+//                classes = {PersistenceJPAConfig.class})})
+//@ComponentScan(excludeFilters  = {@ComponentScan.Filter(
+//                type = FilterType.ASSIGNABLE_TYPE,
+//                classes = {PersistenceJPAConfig.class})})
+//@ComponentScan(basePackages = {"hirs"},
+//        excludeFilters = {@ComponentScan.Filter(
+//                type = FilterType.ASPECTJ,
+//                classes = {PersistenceJPAConfig.class})})
 //@WebAppConfiguration
 //@ExtendWith(SpringExtension.class)
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes={ PageTestConfiguration.class})
 //@SpringBootTest(classes={ PageTestConfiguration.class})
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)  // needed to use non-static BeforeAll
+@ContextConfiguration(classes = {PageTestConfiguration.class})
 //@ContextConfiguration(classes = {HIRSApplication.class, PageTestConfiguration.class})
 public abstract class PageControllerTest {
 
@@ -110,8 +121,6 @@ public abstract class PageControllerTest {
         if (page.getPrefixPath() == null) {
             pagePath = "/" + prePrefixPath + getPage().getViewName();
         }
-
-        System.out.println("\nHEEEEEERRRRE: device page:" + pagePath);
 
         getMockMvc()
                 .perform(MockMvcRequestBuilders.get(pagePath))

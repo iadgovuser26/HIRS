@@ -2,6 +2,7 @@ package hirs.attestationca.portal.page;
 
 import hirs.attestationca.portal.PageConfiguration;
 import hirs.attestationca.persist.entity.userdefined.certificate.CertificateAuthorityCredential;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -27,7 +28,8 @@ import java.util.Properties;
  * This apparently is needed to appease spring tests in the TestNG runner.
  */
 //@Import({ PageConfiguration.class })
-@Configuration
+@TestConfiguration
+//@Configuration
 @EnableJpaRepositories(basePackages = "hirs.attestationca.persist.entity.manager")
 //@EnableTransactionManagement
 public class PageTestConfiguration {
@@ -78,8 +80,8 @@ public class PageTestConfiguration {
      * @return session factory
      */
     //@Bean("test_entityMangerFactory")
-    //@Primary
     @Bean
+    @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
         final LocalContainerEntityManagerFactoryBean entityManagerBean = new LocalContainerEntityManagerFactoryBean();
@@ -103,6 +105,8 @@ public class PageTestConfiguration {
         properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
         properties.put("hibernate.current_session_context_class", "thread");
+        //properties.put("hibernate.connection.username", "hirs_db");
+        //properties.put("hibernate.connection.password", "hirs_db");
         return properties;
     }
 
